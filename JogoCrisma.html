@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Jogo da Crisma</title>
-  <style>
-    body {
+  <style> body {
       font-family: sans-serif, sans-serif;
       background-color: NavajoWhite;
       margin: 0;
@@ -174,7 +173,7 @@
   <script>
     // Defina suas perguntas e respostas aqui
     const modules = [
-        {
+        /*{
           name: "A História da Salvação",
           questions: [
             {
@@ -369,7 +368,8 @@
               options: ["Amós", "Baruc", "João Batista", "Isaias"],
               correctAnswer: 2
             },]
-        }, {
+        }, */
+        {
           name: "O Credo",
           questions: [
             {
@@ -400,8 +400,8 @@
             },
             {
               description: "Por que Deus é eterno?",
-              options: ["Pois Ele sempre existiu, não tem começo e nunca terá fim", "Pois Ele não morre", 
-              "Pois ele foi criado antes de tudo", "Pois ele viverá para sempre"],
+              options: ["Pois Ele sempre existiu, não tem começo e nunca terá fim", 
+              "Pois ele foi criado antes de tudo", "Pois, uma vez criado, Ele não morre",  "Pois ele viverá para sempre"],
               correctAnswer: 0
             },
             {
@@ -531,7 +531,7 @@
             {
               description: "Como Jesus resume a segunda parte dos mandamentos?",
               options: ["Amarás o teu próximo como a ti mesmo", "Amarás a ti mesmo como a teu próximo", "Amarás o teu próximo como a Deus", "Amarás o teu próximo acima de todas as coisas"],
-              correctAnswer: 1
+              correctAnswer: 0
             },
             {
               description: "Qual mandamento é acompanhado de uma promessa?",
@@ -561,7 +561,7 @@
             {
               description: "Qual pecado tem pena de excomunhão aplicada automaticamente a partir do momento da realização do ato pecaminoso?",
               options: ["Eutanásia", "Homicídio doloso", "Aborto", "Pedofilia"],
-              correctAnswer: 0
+              correctAnswer: 2
             },
             {
               description: "Qual é o sexto mandamento?",
@@ -585,8 +585,8 @@
               correctAnswer: 2
             },
             {
-              description: "Como o Cristão deve manifestar a verdade em suas vidas?",
-              options: ["Nas atitudes e nas palavras, de acordo com o exemplo de Cristo que é a Verdade", "Nas palavras, mesmo que não faça o que pensa", "Nas palavras sempre falando o que pensa", "Nas atitudes, sempre agindo da forma que achar melhor" ],
+              description: "Quando um juramento NÃO caracteriza um pecado grave?",
+              options: ["Quando é feito sem a intenção de cumprir.", "Quando é feito com a intenção de cumprir, mas depois muda-se de ideia.", "Quando é feito para revelar uma verdade.", "Quando é feito em nome de Deus." ],
               correctAnswer: 2
             },
             {
@@ -803,6 +803,10 @@
 
       const question = questions[currentQuestion];
 
+      if(!question){
+        displayModules();
+        return;
+      }
       questionElement.textContent = question.description;
 
       optionsElement.innerHTML = '';
@@ -854,7 +858,7 @@
       }, 250);
       setTimeout(() => {
         scoreElement.classList.remove("flipped");
-      }, 750);
+      }, 1000);
 
       setTimeout(() => {
           scoreElement.style.display = 'none';
@@ -876,8 +880,8 @@
       const isCorrect = answer === question.correctAnswer;
 
       if(!isCorrect && currentMode==1){
-        const labelSelected = document.querySelector('label[for=answer'+question.correctAnswer+']');
-        labelSelected.setAttribute('sytyle', "background-color: Goldenrod");
+        var labelSelected = document.querySelector('label[for=answer'+question.correctAnswer+']');
+        labelSelected.setAttribute('style', "background-color: #DAF7A6");
       }
 
       showFeedback(isCorrect);
