@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Jogo da Crisma</title>
+  <style>
+    body {
+      font-family: sans-serif, sans-serif;
+      background-color: NavajoWhite;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+        width: 500px;
+        margin: 0 auto;
+        padding: 20px;
+        font-size: 44px;
+        color: DarkGoldenrod;
+    }
+
+    #game-container {
+      width: 80%;
+      height: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      border: 1px solid DarkGoldenrod;
+      background-color: Wheat;
+    }
+    #game-mode {
+      display: flex;
+      width: 80%;
+      height: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      text-align: center;
+      border: 1px solid DarkGoldenrod;
+      background-color: Wheat;
+    }
+    button {
+            height: 200px;
+            width: 400px;
+            margin: 30px;
+            border-radius: 20%;
+            border: 5px solid  DarkGoldenrod;
+            cursor: pointer;
+            background-color: NavajoWhite;
+            background-size: contain;
+            color: DarkGoldenrod;
+            font-size: 3em;
+            font-weight: bold;
+            
+        }
+
+    #question {
+      font-size: 36px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    #options {
+        display: grid;
+      margin-bottom: 20px;
+    }
+
+    .option {
+      margin-bottom: 10px;
+    }
+
+    #score {
+      width: 80%;
+      margin: 0 auto;
+      padding: 20px;
+      display: flex;
+      font-size: 36px;
+    }
+
+    .score-circle {
+      width: 10%;
+      position: relative;
+      font-weight: bold;
+      padding: 10px;
+      border-radius: 20px;
+      border: 5px solid DarkGoldenrod;
+      cursor: pointer;
+      background-color: transparent;
+      transition: transform 0.3s ease-in-out;
+      transform-style: preserve-3d;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #pontuacao {
+          width: 100%;
+            font-size: 36px;
+            font-weight: bold;
+            padding: 10px;
+            text-align: center;
+            border: 5px solid SaddleBrown;
+            border-radius: 20px;
+            background-color: Wheat;;
+            color: SaddleBrown;
+        }
+
+    .score-circle.flipped {
+        transform: rotateY(180deg);
+    }
+
+    .yellow-star {
+      background-color: Goldenrod;
+    }
+
+    .red-star {
+      background-color: Brown;
+    }
+
+    .score-label {
+      margin-top: 5px;
+      margin-left: 5px;
+    }
+
+    input[type="radio"] {
+    display: none;
+    }
+
+    input[type="radio"] + label {
+    height: 100px;
+    display: inline-block;
+    font-size: 36px;
+    padding: 10px 20px;
+    background-color: Wheat;
+    color: #333;
+    border: 2px solid DarkGoldenrod;
+    border-radius: 30px;
+    cursor: pointer;
+    margin-top: 5px;
+    transition: background-color 0.3s, border-color 0.3s;
+    }
+
+    input[type="radio"]:checked + label {
+    background-color: #007bff;
+    color: #fff;
+    border-color: #007bff;
+    margin-top: 5px;
+    }
+
+    
+
+    
+  </style>
+</head>
+<body>
+    <h1>Jogo da Catequese</h1>
+    <div id="game-mode">
+      <div id="mode">
+        <button id="mode0" onclick="selectIndividualMode()">Modo Individual</button>
+        <button id="mode1" onclick="displayModules()">Modo Desafio</button>
+      </div>
+    </div>
+  <div id="game-container">
+    
+    <div id="question"></div>
+    <div id="options">
+     
+    </div>
+    </div>
+
+    <div id="score">
+      <div id="score-circle"></div>
+      <div id="pontuacao">0 PONTOS</div>
+    </div>
+  </div>
+
+  <script>
+    // Defina suas perguntas e respostas aqui
+    const modules = [
+        {
+          name: "A História da Salvação",
+          questions: [
+            {
+              description: "Como é a principal divisão da Bíblia?",
+              options: ["Antigo Testamento e Novo Testamento", "Antigo Evangelho e Novo Evangelho",
+                "Primeiro Testamento e Segundo Testamento", "Primeiro Evangelho e Segundo Evangelho"],
+              correctAnswer: 0
+            },
+            {
+              description: "Qual livro da Bíblia que narra a Criação?",
+              options: ["Salmos", "Deuteronômio", "Gênesis", "Apocalipse"],
+              correctAnswer: 2
+            },
+            {
+              description: "Qual foi o pecado original de Adão e Eva?",
+              options: ["A Vaidade", "A Luxúria", "A Desobediência", "A Inveja"],
+              correctAnswer: 2
+            },
+            {
+              description: "Por que Caim matou Abel?",
+              options: ["Por ciúmes", "Por inveja", "Por medo", "Por desespero"],
+              correctAnswer: 1
+            },
+            {
+              description: "Quem construiu a barca que salvou a humanidade do dilúvio?",
+              options: ["Ló", "Moisés", "Abrão", "Noé"],
+              correctAnswer: 3
+            },
+            {
+              description: "Quem é considerado o pai da Fé?",
+              options: ["Moisés", "Abraão", "Noé", "Jacó"],
+              correctAnswer: 1
+            },
+            {
+              description: "Qual o nome do filho primogênito de Abraão?",
+              options: ["Isaac", "Israel", "Ismael", "Esaú"],
+              correctAnswer: 2
+            },
+            {
+              description: "Como maior prova de fé, o que Deus pediu para Abrão?",
+              options: ["Sair de sua terra natal", "Sacrifício de Israel", "Sacrifício de Ismael", "Sacrifício de Isaac"],
+              correctAnswer: 3
+            },
+            {
+              description: "Qual o nome da esposa de Isaac?",
+              options: ["Rebeca", "Raquel", "Sara", "Lia"],
+              correctAnswer: 0
+            },
+            {
+              description: "Qual o nome do filho primogênito de Isaac?",
+              options: ["José", "Jacó", "Esaú", "Davi"],
+              correctAnswer: 2
+            },
+            {
+              description: "O que Esaú pediu em troca por seu direito à primogenitura?",
+              options: ["Um bezerro de ouro", "Um prato de sopa de lentilhas", "Todo o rebanho da família", "Uma taça de vinho"],
+              correctAnswer: 1
+            },
+            {
+              description: "Qual o nome das esposas de Jacó?",
+              options: ["Lia e Raquel", "Rebeca e Zelfa", "Raquel e Bala", "Rebeca e Raquel"],
+              correctAnswer: 0
+            },
+            {
+              description: "Como se chama o Tio de Jacó que se tornou seu Sogro?",
+              options: ["Getro", "Labão", "Aarão", "Simeão"],
+              correctAnswer: 1
+            },
+            {
+              description: "Quantos filhos teve Jacó com suas duas esposas e escravas?",
+              options: ["11", "12", "13", "14"],
+              correctAnswer: 2
+            },
+            {
+              description: "Quando trocou o nome de Jacó, que nome Deus lhe deu?",
+              options: ["Salomão", "Saul", "Judá", "Israel"],
+              correctAnswer: 3
+            },
+            {
+              description: "Quem foi vendido por seus irmãos, foi escravo, foi preso e acabou sendo o braço direito do Faraó  no Egito?",
+              options: ["José", "Moisés", "Josué", "Davi"],
+              correctAnswer: 0
+            },
+            {
+              description: "Quem Deus enviou para libertar o povo da escravidão do Egito?",
+              options: ["Jesus", "José", "Josué", "Moisés"],
+              correctAnswer: 3
+            },
+            {
+              description: "Qual livro da Bíblia narra a libertação do povo de Deus da servidão do Egito?",
+              options: ["Gênesis", "Êxodo", "Levítico", "Deuteronômio"],
+              correctAnswer: 1
+            },
+            {
+              description: "Quanto tempo o povo Hebreu ficou cativo no Egito?",
+              options: ["400 dias", "40 meses", "40 anos", "400anos"],
+              correctAnswer: 3
+            },
+
+            {
+              description: "Como se chama o mar que se abriu para o povo Hebreu passar?",
+              options: ["Mar Vermelho", "Mar da Galileia ", "Mar Morto", "Mar Egeu"],
+              correctAnswer: 0
+            },
+            {
+              description: "Depois que saiu do Egito, quanto tempo o povo Hebreu ficou perdido no deserto?",
+              options: ["400 dias", "40 meses", "40 anos", "400 anos"],
+              correctAnswer: 2
+            },
+
+            {
+              description: "Qual foi o sinal da aliança que Deus fez com seu povo no Monte Sinai?",
+              options: ["A arca da Aliança", "A Circuncisão", "O Arco Íris", "Os 10 Mandamentos"],
+              correctAnswer: 3
+            },
+
+            {
+              description: "Depois de atravessar o deserto, quem introduziu o povo Hebreu na Terra Prometida?",
+              options: ["Josué", "Moisés", "Aarão", "Davi"],
+              correctAnswer: 0
+            },
+
+            {
+              description: "De todas as pessoas que saíram da escravidão do Egito só duas Deus permitiu que entrassem na Terra Prometida. São elas:",
+              options: ["Moisés e Aarão", "Abraão e Lot", "Labão e Jacó", "Caleb e Josué"],
+              correctAnswer: 3
+            },
+            {
+              description: "Na Divisão da terra prometida, qual tribo de Israel ficou com a herança cuidar da Tenda de Deus e não recebeu terra alguma?",
+              options: ["Tribo de Levi", "Tribo de José", "Tribo de Judá", "Tribo de Issacar"],
+              correctAnswer: 0
+            },
+            {
+              description: "Qual Juiz venceu sozinho o exército dos Filisteus com sua força extraordinária e foi traído por sua companheira?",
+              options: ["Gedeão", "Roboão", "Samuel", "Sansão"],
+              correctAnswer: 3
+            },
+            {
+              description: "Quem foi o 1º rei de Israel",
+              options: ["Esaú", "Saul", "Davi", "Salomão"],
+              correctAnswer: 1
+            },
+
+            {
+              description: "Quem foi o 2º rei de Israel",
+              options: ["Esaú", "Saul", "Davi", "Salomão"],
+              correctAnswer: 2
+            },
+            {
+              description: "Qual o Rei que construiu o 1º templo de Jerusalém?",
+              options: ["Samuel", "Saul", "Salomão", "Davi"],
+              correctAnswer: 2
+            },
+            {
+              description: "O que o Rei Salomão pediu, em sonho, a Deus?",
+              options: ["Riquezas", "Vida longa", "Vingança", "Sabedoria"],
+              correctAnswer: 3
+            },
+            {
+              description: "Depois da morte de Salomão, o povo de Israel ficou dividido em dois reinos. O Reino do Norte e o Reino do Sul. Como se chamava O reino do sul?",
+              options: ["Reino de Israel", "Reino de Judá", "Reino da Samaria", "Reino de Davi"],
+              correctAnswer: 1
+            },
+            {
+              description: "Qual a capital do Reino de Judá",
+              options: ["Jericó", "Jerusalém", "Samaria", "Belém de Judá"],
+              correctAnswer: 1
+            },
+
+            {
+              description: "No Ano 583 a.C. o Rei da Babilônia invadiu e destruiu Jerusalém e levou o povo cativo. Como se chamava o rei que fez isso?",
+              options: ["Joaquim", "Acab", "Nabucodonosor", "Herodes"],
+              correctAnswer: 2
+            },
+            {
+              description: "Isaias foi?",
+              options: ["Apóstolo", "Juiz", "Patriarca", "Profeta"],
+              correctAnswer: 3
+            },
+            {
+              description: "Qual dos profetas abaixo é considerado um Profeta Maior?",
+              options: ["Jeremias", "Amós", "Miquéias", "Jonas"],
+              correctAnswer: 0
+            },
+            {
+              description: "Quem profetizou o local de nascimento de Jesus?",
+              options: ["Miquéias", "Isaias", "Zacarias", "Ezequiel"],
+              correctAnswer: 0
+            },
+            {
+              description: "Quem foi o último dos profetas?",
+              options: ["Amós", "Baruc", "João Batista", "Isaias"],
+              correctAnswer: 2
+            },]
+        }, {
+          name: "O Credo",
+          questions: [
+            {
+              description: "Qual o principal objetivo da nossa Fé em Jesus Cristo e naquele que O enviou?",
+              options: ["Para obter a salvação", "Para obter saúde", "Para obter uma graça", "Para não pecar"],
+              correctAnswer: 0
+            },
+            {
+              description: "O que NÃO representa a oração do Credo?",
+              options: ["Profissão de Fé", "Unidade", "Símbolo", "Oração de Súplica"],
+              correctAnswer: 3
+            },
+            {
+              description: "O Credo é Trinitário pois é dividido em três partes, quais são elas?",
+              options: ["Deus Pai, Filho e Espírito Santo", "Céu, Purgatório e Inferno", "Fé, esperança e Caridade", "Paixão, morte e ressureição"],
+              correctAnswer: 0
+            },
+            {
+              description: "Qual atributo não pode ser relacionado a Deus?",
+              options: ["Onipresente", "Condescendente", "Onisciente", "Eterno"],
+              correctAnswer: 1
+            },
+            {
+              description: "O que significa crer na Santíssima Trindade?",
+              options: ["Crer em três deuses iguais em poder e em dignidade.", "Crer em um só Deus com três nomes.",
+                "Crer em um só Deus em três pessoas", "Crer em três pessoas que juntas são deuses",],
+              correctAnswer: 2
+            },
+            {
+              description: "Por que Deus é eterno?",
+              options: ["Pois Ele sempre existiu, não tem começo e nunca terá fim", "Pois Ele não morre", 
+              "Pois ele foi criado antes de tudo", "Pois ele viverá para sempre"],
+              correctAnswer: 0
+            },
+            {
+              description: "O que significa dizer que Deus é o criador do céu e da terra?",
+              options: ["Que Deus criou o bem e o mal", "Que Deus criou só as pessoas boas e as coisas boas", 
+              "Que Deus sempre existiu e criou todas as coisas visíveis e invisíveis e não foi criado por ninguém", "Que Deus fez o Big Bang e depois tudo foi criado"],
+              correctAnswer: 2
+            },
+            {
+              description: "Qual o significado do nome Jesus?",
+              options: ["O Filho de Deus", "Deus Salva", "O Ungido", "Deus Conosco"],
+              correctAnswer: 1
+            },
+            {
+              description: "Qual o significado do nome Cristo?",
+              options: ["O Filho de Deus", "Deus Salva", "O Ungido", "Deus Conosco"],
+              correctAnswer: 2
+            },
+            {
+              description: "Por que o Filho de Deus se fez homem?",
+              options: ["Para entender o nosso sofrimento", "Para aproveitar as coisas da carne", "Para nos punir", "Para nos salvar"],
+              correctAnswer: 3
+            },
+            {
+              description: "O que é a Encarnação?",
+              options: [" O fato de o Filho de Deus ter assumido uma natureza humana", "O nascimento de Jesus", 
+              "A mutilação da carne de Jesus em sua paixão", "A transformação do pão e vinho no corpo e sangue de Cristo"],
+              correctAnswer: 0
+            },
+            {
+              description: "No que cremos quando dizemos que Jesus foi concebido pelo Espírito Santo e nasceu da virgem Maria? Cremos que:",
+              options: ["Jesus é apenas uma pessoa Divina que se utilizou de um corpo humano", "Jesus é apenas uma pessoa humana com uma alma divina.", 
+              "Jesus é verdadeiramente Deus e verdadeiramente homem", "Jesus é o Espírito Santo no corpo de um humano"],
+              correctAnswer: 2
+            },
+            {
+              description: "Qual NÃO é um Dogma Mariano?",
+              options: ["Maria, Imaculada Conceição", "Maria, Sempre Virgem", "Maria, Mãe de Deus", "Maria, Cheia de Graça"],
+              correctAnswer: 3
+            },
+            {
+              description: "Por que Jesus foi condenado à morte por seu povo?",
+              options: ["Porque Ele expulsava os demônios", "Porque Ele realizou milagres em dia de sábado", 
+              "Porque Ele reconheceu ser o filho de Deus", "Porque Ele cometeu um pecado grave"],
+              correctAnswer: 2
+            },
+            {
+              description: "Como foi a morte de Jesus?",
+              options: ["Jesus morreu crucificado", "Jesus morreu apedrejado", 
+              "Jesus morreu açoitado", "Jesus morreu por um golpe de espada"],
+              correctAnswer: 0
+            },
+            {
+              description: "Qual o propósito da morte de Jesus na cruz?",
+              options: ["Para poder ressuscitar e vencer a morte", "Para remissão dos nossos pecados", "Para mostrar sua humildade", 
+              "Para libertar Barrabás"],
+              correctAnswer: 1
+            },
+            {
+              description: "Quem pediu a Pilatos autorização para sepultar Jesus?",
+              options: ["Nicodemos", "Zaqueu","José de Arimatéia","Maria Madalena" ],
+              correctAnswer: 2
+            },
+            {
+              description: "Jesus ressuscitou após quantos dias de sua morte?",
+              options: ["1", "2", "3","4" ],
+              correctAnswer: 2
+            },
+            {
+              description: "Qual destes acontecimentos alimenta nossa fé de que um dia teremos a vida eterna no céu?",
+              options: ["A encarnação de Cristo", "A paixão de Cristo", "A morte de Cristo", "A ressurreição de Cristo" ],
+              correctAnswer: 3
+            },]
+        }, {
+          name: "Os Mandamentos",
+          questions: [
+            {
+              description: "A quem Deus entregou os Mandamentos?",
+              options: ["Abraão", "Jacó", "Moisés", "Davi"],
+              correctAnswer: 2
+            },
+            {
+              description: "Em que monte Moisés recebeu a tábua dos 10 Mandamentos?",
+              options: ["Monte Oreb", "Monte Sinai", "Monte do Calvário", "Monte Everest"],
+              correctAnswer: 1
+            },
+            {
+              description: "Em quais livros da bíblia encontramos a relação dos 10 Mandamentos?",
+              options: ["Êxodo e Deuteronômio", "Gênesis e Números", "Gênesis e Levítico", "Levítico e Deuteronômio"],
+              correctAnswer: 0
+            },
+            {
+              description: "Segundo Jesus, qual o mandamento mais importante?",
+              options: ["Primeiro Mandamento", "Segundo Mandamento", "Terceiro Mandamento", "Quarto Mandamento"],
+              correctAnswer: 0
+            },
+            {
+              description: "Os mandamentos foram divididos em duas tábuas, como foram organizados nestes dois grupos?",
+              options: [ "Mandamentos obrigatórios e opcionais", "Mandamentos de Deus e da Igreja", "Nosso deveres para com o próximo e para com a Igreja", "Nosso deveres para com Deus e para com o próximo"],
+              correctAnswer: 3
+            },
+            {
+              description: "Escolha a melhor resposta para o chamado que nos faz o Primeiro Mandamento?",
+              options: [ "Crer em Deus sobre todas as coisa", "Esperar em Deus sobre todas as coisas", "Amar a Deus sobre todas as coisa", "Todas as opções anteriores"],
+              correctAnswer: 3
+            },
+            {
+              description: "Qual pecado NÃO está relacionado diretamente ao Primeiro Mandamento?",
+              options: [ "Superstição", "Idolatria", "Magia", "Roubo"],
+              correctAnswer: 3
+            },
+            {
+              description: "O que nos ensina o segundo mandamento?",
+              options: [ "A guardar os dias de preceito", "A respeitar e honrar pai e mãe", "A respeitar e santificar o nome de Deus", "A respeitar a vida"],
+              correctAnswer: 2
+            },
+            {
+              description: "Porque nós Cristãos Católicos obedecemos ao Segundo Mandamento guardando o domingo e não o sábado?",
+              options: ["Domingo é o dia da ressurreição de Cristo", "Domingo é o dia de descanso no mundo todo", "Porque tem pessoas que trabalham no sábado", "Porque Jesus fez milagres no sábado"],
+              correctAnswer: 0
+            },
+            {
+              description: "Qual nossa obrigação principal como fiéis católicos no domingo e nos outros dias santos de preceito?",
+              options: ["Descansar e reservar um tempo para a família", "Participar da Missa", "Realizar trabalhos sociais e religiosos", "Rezar o terço"],
+              correctAnswer: 1
+            },
+            {
+              description: "Como Jesus resume a segunda parte dos mandamentos?",
+              options: ["Amarás o teu próximo como a ti mesmo", "Amarás a ti mesmo como a teu próximo", "Amarás o teu próximo como a Deus", "Amarás o teu próximo acima de todas as coisas"],
+              correctAnswer: 1
+            },
+            {
+              description: "Qual mandamento é acompanhado de uma promessa?",
+              options: ["Primeiro Mandamento", "Segundo Mandamento", "Terceiro Mandamento", "Quarto Mandamento"],
+              correctAnswer: 3
+            },
+            {
+              description: "Qual obrigação nos impõe o quarto mandamento?",
+              options: ["Honrar pai e mãe", "Respeitar os professores", "Obedecer aos superiores", "Todas as opções anteriores"],
+              correctAnswer: 3
+            },
+            {
+              description: "Na estrutura familiar, a quem o quarto mandamento estabelece deveres?",
+              options: ["Deveres dos filhos e dos pais", "Somente deveres dos filhos", "Somente deveres dos filhos e netos", "Somente deveres dos pais e avós"],
+              correctAnswer: 0
+            },
+            {
+              description: "De que trata o quinto mandamento?",
+              options: ["Do direito à propriedade privada", "Do respeito à vida", "Da castidade", "Da cobiça"],
+              correctAnswer: 1
+            },
+            {
+              description: "Em que situação é possível que haja um homicídio sem a culpa de um pecado mortal?",
+              options: ["Quando da proteção de sua propriedade", "Quando se tratar da pena de morte de um assassino", "Quando da legítima defesa", "Quando da defesa de um animal"],
+              correctAnswer: 2
+            },
+            {
+              description: "Qual pecado tem pena de excomunhão aplicada automaticamente a partir do momento da realização do ato pecaminoso?",
+              options: ["Eutanásia", "Homicídio doloso", "Aborto", "Pedofilia"],
+              correctAnswer: 0
+            },
+            {
+              description: "Qual é o sexto mandamento?",
+              options: ["Não matar", "Não Roubar", "Não pecar contra a castidade", "Não levantar falso testemunho"],
+              correctAnswer: 2
+            },
+            {
+              description: "Quais pecados NÃO representam ofensa à Castidade?",
+              options: ["Masturbação", "Fornicação", "Pornografia", "Mentira",],
+              correctAnswer: 3
+            },
+            {
+              description: "Por que o roubo pode se tornar uma ofensa grave?",
+              options: ["Porque ofende ao direito à propriedade privada", "Porque usurpa a propriedade de alguém mesmo com seu consentimento", 
+              "Porque o ladrão é sempre preguiçoso", "Porque algumas pessoas merecem ter mais bens que outras"],
+              correctAnswer: 0
+            },
+            {
+              description: "Qual é o Oitavo Mandamento?",
+              options: ["Não furtar", "Não desejar a mulher do próximo", "Não levantar falso testemunho","Não desejar as coisas alheias" ],
+              correctAnswer: 2
+            },
+            {
+              description: "Como o Cristão deve manifestar a verdade em suas vidas?",
+              options: ["Nas atitudes e nas palavras, de acordo com o exemplo de Cristo que é a Verdade", "Nas palavras, mesmo que não faça o que pensa", "Nas palavras sempre falando o que pensa", "Nas atitudes, sempre agindo da forma que achar melhor" ],
+              correctAnswer: 2
+            },
+            {
+              description: "Quantos mandamentos são ofendidos diretamente pelo pecado da Cobiça?",
+              options: ["2", "3","4","5" ],
+              correctAnswer: 2
+            },
+          
+          ]
+        }, {
+          name: "Os Sacramentos",
+          questions: [
+            {
+              description: "Quantos são os sacramentos?",
+              options: ["5", "6", "7", "8"],
+              correctAnswer: 2
+            },
+            {
+              description: "Didaticamente, como são divididos os grupos dos sacramentos?",
+              options: ["Sacramentos da Iniciação Cristão, de Cura e de Serviço", "Sacramentos do Pai, do Filho e do Espírito Santo", 
+              "Sacramentos do Batismo, da Penitência e da Eucaristia", "Sacramentos da Iniciação, do Aprofundamento e da Conclusão Cristã"],
+              correctAnswer: 0
+            },
+            {
+              description: "Qual dos sacramentos abaixo NÃO faz parte dos Sacramentos da Iniciação Cristã?",
+              options: ["Batismo", "Confirmação", "Penitência/Confissão", "Eucaristia"],
+              correctAnswer: 2
+            },
+            {
+              description: "Por que o sacramento do Batismo é tão importante?",
+              options: ["Porque dá acesso a todos os outros sacramentos", "Porque nos liberta de todos os nossos pecados", 
+              "Porque nos torna filhos de Deus como membros do Corpo de Cristo", "Todas as opções estão corretas"],
+              correctAnswer: 3
+            },
+            {
+              description: "Normalmente, quem NÃO pode ministrar o batismo?",
+              options: ["Os pais das Criança", "O Diácono", 
+              "O Padre", "O Bispo"],
+              correctAnswer: 0
+            },
+            {
+              description: "Qual a matéria do sacramento do Batismo?",
+              options: ["Água", "Óleo", "Pão", "Vinho"],
+              correctAnswer: 0
+            },
+            {
+              description: "Qual a importância do sacramento da Crisma?",
+              options: ["Porque perdoa todos os nossos pecados", "Porque completa a graça baptismal; este é o sacramento que dá o Espírito Santo", 
+              "Porque nos une ao corpo e sangue de Cristo", "Porque nos torna apóstolos de Cristo com autoridade para ministrar os sacramentos"],
+              correctAnswer: 1
+            },
+            {
+              description: "Qual sacramento imprime no Cristão um caráter indelével?",
+              options: ["Batismo, Confirmação e Eucaristia", "Batismo, Eucaristia e Ordem", 
+               "Batismo, Confirmação e Ordem", "Confirmação, Eucaristia e Ordem"],
+              correctAnswer: 2
+            },
+            {
+              description: "Qual sacramento é a fonte e o cume de toda a vida Cristã?",
+              options: ["Batismo", "Confirmação", "Eucaristia", "Ordem"],
+              correctAnswer: 2
+            },
+            {
+              description: "Quem instituiu o sacramento da Eucaristia?",
+              options: ["Moisés", "João Batista", "Pedro e os Apóstolos", "Jesus Cristo"],
+              correctAnswer: 3
+            },
+            {
+              description: "O que está contido na Eucaristia?",
+              options: ["O corpo e o sangue, conjuntamente com a alma e a divindade de Jesus", 
+              "O corpo e o sangue de Jesus apenas", "O corpo e a alma de Jesus", "A alma e a divindade de Jesus"],
+              correctAnswer: 0
+            },
+            {
+              description: "Quais são os sacramentos de Cura?",
+              options: ["Eucaristia e Reconciliação", "Penitência e Unção dos Enfermos", "Unção dos Enfermos e Matrimônio", "Todas as opções anteriores"],
+              correctAnswer: 1
+            },
+            {
+              description: "Por que o sacramento da Reconciliação é importante?",
+              options: ["Porque perdoa todos as nossas culpas, as eternas e as temporais", "Porque perdoa nossos pecados cometidos após o Batismo", 
+              "Porque apaga em nós a culpa do pecado original", "Porque nos habilita a perdoar os pecados dos outros"],
+              correctAnswer: 1
+            },
+            {
+              description: "Qual graça é recebida no sacramento da Unção dos Enfermos?",
+              options: ["A união do doente à paixão de Cristo, para o seu bem e para o de toda a Igreja", "o perdão dos pecados, se o doente não pôde obtê-lo pelo sacramento da Penitência", 
+              "O restabelecimento da saúde, se tal for conveniente para a salvação espiritual", "Todas as opções anteriores"],
+              correctAnswer: 3
+            },
+            {
+              description: "Quais são os sacramentos de Serviço?",
+              options: ["Ordem e Matrimônio", "Matrimônio e Confirmação", "Confirmação e Ordem", "Confirmação e Eucaristia"],
+              correctAnswer: 0
+            },
+            {
+              description: "Quantos graus existem no sacramento da ordem?",
+              options: ["1", "2", "3", "4"],
+              correctAnswer: 2
+            },
+            {
+              description: "Qual NÃO é um grau do sacramento da Ordem?",
+              options: ["Diaconato", "Presbiterado", "Episcopado", "Papado"],
+              correctAnswer: 3
+            },
+            {
+              description: "Quem é o ministro ordinário do sacramento do Matrimônio?",
+              options: ["O bispo" , "O padre", "O diácono", "Os noivos"],
+              correctAnswer: 3
+            },
+            {
+              description: "Qual promessa os noivos NÃO fazem ao ministrarem o sacramento do Matrimônio?",
+              options: ["Fidelidade" , "Prosperidade", "Fecundidade", "Amor"],
+              correctAnswer: 1
+            },
+
+          ]
+        }, 
+      ];
+      
+    var questions = new Array();
+    var currentMode = 0;
+    let currentModule = 0;
+    let score = 0;
+    let currentQuestion = 0;
+
+    const modeElement = document.getElementById('game-mode');
+    const gameElement = document.getElementById('game-container');
+    const scorePainelElement = document.getElementById('score');
+    const questionElement = document.getElementById('question');
+    const optionsElement = document.getElementById('options');
+    const scoreElement = document.getElementById('score-circle');
+
+    function displayMode(){
+      modeElement.style.display = 'block';
+      gameElement.style.display = 'none';
+      scorePainelElement.style.display = 'none';
+    }
+
+    function selectIndividualMode(){
+      currentMode = 0;
+      questions = new Array();
+      modules.forEach(q => {
+        questions = questions.concat(q.questions);
+      });
+      //
+      for (let i = questions.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [questions[i], questions[j]] = [questions[j], questions[i]];
+      }
+      modeElement.style.display = 'none';
+      gameElement.style.display = 'block';
+      scorePainelElement.style.display = 'flex';
+      currentQuestion = 0;
+      score = 0;
+      displayQuestion();
+      setTimeout(() => {
+        displayMode();
+        scorePainelElement.style.display = 'flex';
+      }, 300000);
+    }
+
+    function displayModules(){
+      currentMode = 1;
+      modeElement.style.display = 'none';
+      gameElement.style.display = 'block';
+      scorePainelElement.style.display = 'flex';
+
+      questionElement.textContent = "Selecione um módulo";
+
+      optionsElement.innerHTML = '';
+      for (let i = 0; i < modules.length; i++) {
+        const option = modules[i].name;
+        const radio = document.createElement('input');
+        radio.type = 'radio';
+        radio.name = 'answer';
+        radio.id = 'answer'+i;
+        radio.value = i;
+        const label = document.createElement('label');
+        label.textContent = option;
+        label.setAttribute('for', radio.id);
+        // Adicionar evento de clique na resposta
+        radio.addEventListener('click', () => {
+          selectModule(i);
+        });
+       
+        optionsElement.appendChild(radio);
+        optionsElement.appendChild(label);
+      }
+
+      // Limpar seleção de resposta anterior
+      const selectedOption = document.querySelector('input[name="answer"]:checked');
+      if (selectedOption) {
+        selectedOption.checked = false;
+      }
+
+     
+
+    }
+    function selectModule(module){
+      if(module<modules.length){
+        currentModule = module;
+      }else{
+        currentModule = 0;
+      }
+      questions = modules[currentModule].questions;
+      currentQuestion = 0;
+      score = 0;
+      displayQuestion();
+    }
+      
+
+    function displayQuestion() {
+
+      const question = questions[currentQuestion];
+
+      questionElement.textContent = question.description;
+
+      optionsElement.innerHTML = '';
+      for (let i = 0; i < question.options.length; i++) {
+        const option = question.options[i];
+        const radio = document.createElement('input');
+        radio.type = 'radio';
+        radio.name = 'answer';
+        radio.id = 'answer'+i;
+        radio.value = i;
+        const label = document.createElement('label');
+        label.textContent = option;
+        label.setAttribute('for', radio.id);
+        // Adicionar evento de clique na resposta
+        radio.addEventListener('click', checkAnswer);
+       
+        optionsElement.appendChild(radio);
+        optionsElement.appendChild(label);
+        
+        atualizarPontuacao();
+      }
+
+      // Limpar seleção de resposta anterior
+      const selectedOption = document.querySelector('input[name="answer"]:checked');
+      if (selectedOption) {
+        selectedOption.checked = false;
+      }
+    }
+
+    function showFeedback(isCorrect) {
+      scoreElement.classList.add('score-circle');
+      scoreElement.style.display = 'flex';
+      if (isCorrect) {
+        scoreElement.classList.remove('red-star');
+        scoreElement.classList.add('yellow-star');
+        scoreElement.textContent = '+1';
+        score++;
+      } else {
+        scoreElement.classList.remove('yellow-star');
+        scoreElement.classList.add('red-star');
+        scoreElement.textContent = '-1';
+        score = Math.max(score - 1, 0);
+      }
+      
+      scoreElement.classList.remove("flipped");
+      setTimeout(() => {
+        
+        scoreElement.classList.add("flipped");
+      }, 250);
+      setTimeout(() => {
+        scoreElement.classList.remove("flipped");
+      }, 750);
+
+      setTimeout(() => {
+          scoreElement.style.display = 'none';
+          atualizarPontuacao();
+          displayQuestion();
+      }, 1000);
+
+      
+    }
+
+    function checkAnswer() {
+      const selectedOption = document.querySelector('input[name="answer"]:checked');
+      if (!selectedOption) {
+        return; // Nenhuma resposta selecionada
+      }
+
+      const answer = parseInt(selectedOption.value);
+      const question = questions[currentQuestion];
+      const isCorrect = answer === question.correctAnswer;
+
+      if(!isCorrect && currentMode==1){
+        const labelSelected = document.querySelector('label[for=answer'+question.correctAnswer+']');
+        labelSelected.setAttribute('sytyle', "background-color: Goldenrod");
+      }
+
+      showFeedback(isCorrect);
+
+      currentQuestion++;
+      if (currentQuestion >= questions.length) {
+        // Todas as perguntas respondidas
+        if(currentMode){
+          displayModules();
+        }else{
+          displayMode();
+        }
+      }
+    }
+
+    function atualizarPontuacao() {
+        const pontuacaoElemento = document.getElementById("pontuacao");
+        pontuacaoElemento.textContent = `${score} PONTO` + (score != 1 ? 'S' : '');
+    }
+
+    // Event listener para verificar a resposta ao clicar no botão de envio
+    const submitButton = document.createElement('button');
+    submitButton.textContent = 'Responder';
+    submitButton.addEventListener('click', checkAnswer);
+    optionsElement.appendChild(submitButton);
+
+    // Iniciar o jogo
+    displayMode();
+    
+  </script>
+</body>
+</html>
+
