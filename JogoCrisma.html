@@ -3,24 +3,43 @@
 <head>
   <meta charset="UTF-8">
   <title>Jogo da Crisma</title>
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
   <style> body {
+      width: 800px;
       font-family: sans-serif, sans-serif;
       background-color: NavajoWhite;
       margin: 0;
-      padding: 0;
+      padding: 20px;
+      display: inline-block;
     }
 
     h1 {
-        width: 500px;
         margin: 0 auto;
-        padding: 20px;
+        padding: 5px;
         font-size: 44px;
         color: DarkGoldenrod;
     }
 
+    #headLineDiv {
+        width: 80%;
+        margin: 0 auto;
+        padding: 20px;
+        font-size: 44px;
+        text-align: center;
+        color: DarkGoldenrod;
+        position: relative;
+        border: 1px solid DarkGoldenrod;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .leftHeadLine {
+      text-align: left;
+    }
+
     #game-container {
       width: 80%;
-      height: 600px;
+      height: 80%;
       margin: 0 auto;
       padding: 20px;
       border: 1px solid DarkGoldenrod;
@@ -29,14 +48,42 @@
     #game-mode {
       display: flex;
       width: 80%;
-      height: 600px;
+      height: 80%;
       margin: 0 auto;
       padding: 20px;
       text-align: center;
       border: 1px solid DarkGoldenrod;
       background-color: Wheat;
     }
-    button {
+    #mode0 {
+            height: 200px;
+            width: 400px;
+            margin: 30px;
+            border-radius: 20%;
+            border: 5px solid  DarkGoldenrod;
+            cursor: pointer;
+            background-color: NavajoWhite;
+            background-size: contain;
+            color: DarkGoldenrod;
+            font-size: 3em;
+            font-weight: bold;
+            
+        }
+      #mode1 {
+            height: 200px;
+            width: 400px;
+            margin: 30px;
+            border-radius: 20%;
+            border: 5px solid  DarkGoldenrod;
+            cursor: pointer;
+            background-color: NavajoWhite;
+            background-size: contain;
+            color: DarkGoldenrod;
+            font-size: 3em;
+            font-weight: bold;
+            
+        }
+      #mode2 {
             height: 200px;
             width: 400px;
             margin: 30px;
@@ -66,12 +113,43 @@
       margin-bottom: 10px;
     }
 
-    #score {
+
+    #control {
       width: 80%;
       margin: 0 auto;
       padding: 20px;
       display: flex;
       font-size: 36px;
+    }
+
+    #nav-left {
+      width: 10%;
+      font-size: 36px;
+      font-weight: bold;
+      text-align: center;
+      border: 5px solid SaddleBrown;
+      border-radius: 10px;
+      background-color: Wheat;;
+      color: SaddleBrown;
+    }
+
+    #nav-right {
+      width: 10%;
+      font-size: 36px;
+      font-weight: bold;
+      text-align: center;
+      border: 5px solid SaddleBrown;
+      border-radius: 10px;
+      background-color: Wheat;;
+      color: SaddleBrown;
+    }
+
+    #score {
+      width: 80%;
+      margin: 0 auto;
+      display: flex;
+      font-size: 36px;
+      position: relative;
     }
 
     .score-circle {
@@ -125,7 +203,7 @@
     input[type="radio"] + label {
     height: 100px;
     display: inline-block;
-    font-size: 36px;
+    font-size: 30px;
     padding: 10px 20px;
     background-color: Wheat;
     color: #333;
@@ -137,9 +215,9 @@
     }
 
     input[type="radio"]:checked + label {
-    background-color: #007bff;
+    background-color: SandyBrown;
     color: #fff;
-    border-color: #007bff;
+    border-color: SandyBrown;
     margin-top: 5px;
     }
 
@@ -149,26 +227,32 @@
   </style>
 </head>
 <body>
-    <h1>Jogo da Catequese</h1>
+  
+  <div id="headLineDiv" >
+    <a onclick="nextQuestion()" class="leftHeadLine"><i class="fa fa-home" aria-hidden="true"></i></a>
+    <span>Jogo da Catequese</span>
+    <a onclick="nextQuestion()" ><i class="fa fa-close" aria-hidden="true"></i></a>
+  </div>
     <div id="game-mode">
       <div id="mode">
         <button id="mode0" onclick="selectIndividualMode()">Modo Individual</button>
         <button id="mode1" onclick="displayModules()">Modo Desafio</button>
+        <button id="mode2" onclick="displayReview()">Revisar Respostas</button>
       </div>
     </div>
-  <div id="game-container">
-    
-    <div id="question"></div>
-    <div id="options">
-     
+    <div id="game-container" >
+      <div id="question"></div>
+      <div id="options"></div>
     </div>
+    <div id="control" >
+      <button id="nav-left" onclick="previousQuestion()"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
+      <div id="score">
+        <div id="score-circle"></div>
+        <div id="pontuacao">0 PONTOS</div>
+      </div>
+      <button id="nav-right" onclick="nextQuestion()"><i class="fa fa-arrow-right" aria-hidden="true"></i></button>
     </div>
 
-    <div id="score">
-      <div id="score-circle"></div>
-      <div id="pontuacao">0 PONTOS</div>
-    </div>
-  </div>
 
   <script>
     // Defina suas perguntas e respostas aqui
@@ -712,18 +796,22 @@
     let currentModule = 0;
     let score = 0;
     let currentQuestion = 0;
+    let answers = new Array();
+    let reviewMode = false;
 
     const modeElement = document.getElementById('game-mode');
     const gameElement = document.getElementById('game-container');
-    const scorePainelElement = document.getElementById('score');
+    const controlPainelElement = document.getElementById('control');
     const questionElement = document.getElementById('question');
     const optionsElement = document.getElementById('options');
     const scoreElement = document.getElementById('score-circle');
+    const leftElement = document.getElementById('nav-left');
+    const rightElement = document.getElementById('nav-right');
 
     function displayMode(){
       modeElement.style.display = 'block';
       gameElement.style.display = 'none';
-      scorePainelElement.style.display = 'none';
+      controlPainelElement.style.display = 'none';
     }
 
     function selectIndividualMode(){
@@ -739,21 +827,28 @@
       }
       modeElement.style.display = 'none';
       gameElement.style.display = 'block';
-      scorePainelElement.style.display = 'flex';
+      controlPainelElement.style.display = 'flex';
       currentQuestion = 0;
       score = 0;
       displayQuestion();
       setTimeout(() => {
         displayMode();
-        scorePainelElement.style.display = 'flex';
+        controlPainelElement.style.display = 'flex';
       }, 300000);
+    }
+
+    function displayReview(){
+      reviewMode = true;
+      displayModules();
     }
 
     function displayModules(){
       currentMode = 1;
       modeElement.style.display = 'none';
       gameElement.style.display = 'block';
-      scorePainelElement.style.display = 'flex';
+      controlPainelElement.style.display = 'none';
+      leftElement.style.display = 'none';
+      rightElement.style.display = 'none';
 
       questionElement.textContent = "Selecione um módulo";
 
@@ -795,6 +890,7 @@
       questions = modules[currentModule].questions;
       currentQuestion = 0;
       score = 0;
+      controlPainelElement.style.display = 'flex';
       displayQuestion();
     }
       
@@ -820,8 +916,10 @@
         const label = document.createElement('label');
         label.textContent = option;
         label.setAttribute('for', radio.id);
-        // Adicionar evento de clique na resposta
-        radio.addEventListener('click', checkAnswer);
+        if(!reviewMode){
+          // Adicionar evento de clique na resposta
+          radio.addEventListener('click', checkAnswer);  
+        }
        
         optionsElement.appendChild(radio);
         optionsElement.appendChild(label);
@@ -834,6 +932,33 @@
       if (selectedOption) {
         selectedOption.checked = false;
       }
+
+      if(reviewMode){
+          if (currentQuestion <= 0) { 
+            leftElement.style.display = 'none';
+          }else{
+            leftElement.style.display = 'block';
+          }
+          if (currentQuestion >= questions.length) { 
+            rightElement.style.display = 'none';
+          }else{
+            rightElement.style.display = 'block';
+          }
+
+          for(var i=0; i<= answers.length;i++){
+            var a = answers[i];
+            if(a && a.m==currentModule&&a.q==currentQuestion ){
+              var labelSelected = document.querySelector('label[for=answer'+question.correctAnswer+']');
+              labelSelected.setAttribute('style', "background-color: #DAF7A6");
+              if(a.a!=question.correctAnswer){
+                var labelAns = document.querySelector('label[for=answer'+a.a+']');
+                labelAns.setAttribute('style', "background-color: tomato");
+              }
+              break;
+            }
+          }
+        }
+
     }
 
     function showFeedback(isCorrect) {
@@ -879,6 +1004,10 @@
       const question = questions[currentQuestion];
       const isCorrect = answer === question.correctAnswer;
 
+      if(currentMode==1 && question){
+        answers.push({m: currentModule, q: currentQuestion, a: answer});
+      }  
+
       if(!isCorrect && currentMode==1){
         var labelSelected = document.querySelector('label[for=answer'+question.correctAnswer+']');
         labelSelected.setAttribute('style', "background-color: #DAF7A6");
@@ -900,6 +1029,20 @@
     function atualizarPontuacao() {
         const pontuacaoElemento = document.getElementById("pontuacao");
         pontuacaoElemento.textContent = `${score} PONTO` + (score != 1 ? 'S' : '');
+    }
+
+    function nextQuestion(){
+      if (currentQuestion < questions.length) {
+        currentQuestion++;
+        displayQuestion(); 
+      }
+      
+    }
+    function previousQuestion(){
+      if (currentQuestion > 0) {
+        currentQuestion--;
+        displayQuestion(); 
+      }
     }
 
     // Event listener para verificar a resposta ao clicar no botão de envio
