@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Jogo da Crisma</title>
-  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+  <link rel="stylesheet" href="./font-awesome-4.7.0/css/font-awesome.min.css">
   <style> body {
       width: 800px;
       font-family: sans-serif, sans-serif;
@@ -31,10 +31,6 @@
         border: 1px solid DarkGoldenrod;
         display: flex;
         justify-content: space-between;
-    }
-
-    .leftHeadLine {
-      text-align: left;
     }
 
     #game-container {
@@ -118,8 +114,9 @@
       width: 80%;
       margin: 0 auto;
       padding: 20px;
-      display: flex;
       font-size: 36px;
+      display: flex;
+      justify-content: space-between;
     }
 
     #nav-left {
@@ -145,7 +142,7 @@
     }
 
     #score {
-      width: 80%;
+      width: 70%;
       margin: 0 auto;
       display: flex;
       font-size: 36px;
@@ -229,9 +226,9 @@
 <body>
   
   <div id="headLineDiv" >
-    <a onclick="nextQuestion()" class="leftHeadLine"><i class="fa fa-home" aria-hidden="true"></i></a>
+    <a onclick="displayMode()" ><i class="fa fa-home" aria-hidden="true"></i></a>
     <span>Jogo da Catequese</span>
-    <a onclick="nextQuestion()" ><i class="fa fa-close" aria-hidden="true"></i></a>
+    <a onclick="displayModules()" ><i class="fa fa-reply" aria-hidden="true"></i></a>
   </div>
     <div id="game-mode">
       <div id="mode">
