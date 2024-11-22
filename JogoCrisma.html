@@ -5,7 +5,7 @@
   <title>Jogo da Crisma</title>
   <link rel="stylesheet" href="./font-awesome-4.7.0/css/font-awesome.min.css">
   <style> body {
-       width: 100%;
+      width: 100%;
       height: 100%;
       font-family: sans-serif, sans-serif;
       background-color: NavajoWhite;
@@ -671,7 +671,7 @@
               correctAnswer: 1
             },
             {
-              description: "Uma pessoa muito idosa internada com uma doença incurável vai para a UTI e sofre muitas dores e já está inconsciente, mas tem chances de sobreviver. Alguém sugere desligar os aparelhos para aliviar o sofrimento dela. Quanto a esta sugestão é a moral católica afirmar que:",
+              description: "Uma pessoa internada com uma doença incurável vai para a UTI e sofre muitas dores e já está inconsciente, mas tem chances de sobreviver. Alguém sugere desligar os aparelhos para aliviar o sofrimento dela. Quanto a esta sugestão é possível afirmar que:",
               options: ["É lícito desligar os aparelhos, pois ninguém merece sofrer tanto.", "Não é lícito desligar os aparelhos, pois a pessoa tem que ser consultada antes.", "Seria lícito desligar os aparelhos se os parentes autorizassem.", "Não é lícito desligar os aparelhos, pois só Deus tem autoridade sobre a vida."],
               correctAnswer: 3
             },
@@ -841,6 +841,7 @@
     let score = 0;
     let currentQuestion = 0;
     let answers = [];
+    let scores = [];
     let reviewMode = false;
 
     const modeElement = document.getElementById('game-mode');
@@ -870,16 +871,16 @@
           [questions[i], questions[j]] = [questions[j], questions[i]];
       }
       modeElement.style.display = 'none';
+      leftElement.style.display = 'none';
+      rightElement.style.display = 'none';
       gameElement.style.display = 'block';
       controlPainelElement.style.display = 'flex';
       currentQuestion = 0;
       score = 0;
+      reviewMode = false;
       displayQuestion();
-      setTimeout(() => {
-        displayMode();
-        controlPainelElement.style.display = 'flex';
-      }, 300000);
     }
+    
 
     function displayReview(){
       displayModules(true);
@@ -951,6 +952,8 @@
         reviewMode = true;
         currentQuestion = 0;
         question = questions[currentQuestion];
+      }else if(reviewMode){
+        score = scores[currentModule]? scores[currentModule]: 0;
       }
       questionElement.textContent = question.description;
 
@@ -1021,6 +1024,9 @@
         scoreElement.classList.add('red-star');
         scoreElement.textContent = '-1';
         score = Math.max(score - 1, 0);
+      }
+      if(currentMode){
+        scores[currentModule] = score;
       }
       
       scoreElement.classList.remove("flipped");
