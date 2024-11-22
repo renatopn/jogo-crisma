@@ -228,7 +228,7 @@
   <div id="headLineDiv" >
     <a onclick="displayMode()" ><i class="fa fa-home" aria-hidden="true"></i></a>
     <span>Jogo da Catequese</span>
-    <a onclick="displayModules()" ><i class="fa fa-reply" aria-hidden="true"></i></a>
+    <a onclick="" ><i></i></a>
   </div>
     <div id="game-mode">
       <div id="mode">
@@ -451,18 +451,18 @@
             },]
         }, */
         {
-          name: "O Credo",
+          name: "Trindade a Novíssimos ",
           questions: [
             {
               description: "Qual o principal objetivo da nossa Fé em Jesus Cristo e naquele que O enviou?",
               options: ["Para obter a salvação", "Para obter saúde", "Para obter uma graça", "Para não pecar"],
               correctAnswer: 0
             },
-            {
+            /* {
               description: "O que NÃO representa a oração do Credo?",
               options: ["Profissão de Fé", "Unidade", "Símbolo", "Oração de Súplica"],
               correctAnswer: 3
-            },
+            }, */
             {
               description: "O Credo é Trinitário pois é dividido em três partes, quais são elas?",
               options: ["Deus Pai, Filho e Espírito Santo", "Céu, Purgatório e Inferno", "Fé, esperança e Caridade", "Paixão, morte e ressureição"],
@@ -490,6 +490,16 @@
               options: ["Que Deus criou o bem e o mal", "Que Deus criou só as pessoas boas e as coisas boas", 
               "Que Deus sempre existiu e criou todas as coisas visíveis e invisíveis e não foi criado por ninguém", "Que Deus fez o Big Bang e depois tudo foi criado"],
               correctAnswer: 2
+            },
+            {
+              description: "De tudo que foi criado, qual posição ocupa o homem na criação?",
+              options: ["O homem é a base de toda a criação.", "O homem é o sustento da criação.", "O homem é o ápice da criação.", "O homem é só mais uma criatura."],
+              correctAnswer: 2
+            },
+            {
+              description: "Antes do pecado original, o que Deus disse que aconteceria com homem se ele comesse do fruto da árvore da ciência do bem e do mal?",
+              options: ["O Homem morreria.", "O Homem seria expulso do paraíso.", "O Homem deixaria de ver Deus.", "O Homem se tornaria inimigo de Deus."],
+              correctAnswer: 0
             },
             {
               description: "Qual o significado do nome Jesus?",
@@ -524,16 +534,15 @@
               correctAnswer: 3
             },
             {
+              description: "O que significa dizer que Maria é Mãe de Deus? Significa dizer que:",
+              options: ["Maria é mãe da Santíssima Trindade.", "Maria é Mãe de Jesus, verdadeiro Deus e verdadeiro Homem", "Maria é mãe de Deus Pai criador.", "Maria é mãe do Espírito Santo."],
+              correctAnswer: 1
+            },
+            {
               description: "Por que Jesus foi condenado à morte por seu povo?",
               options: ["Porque Ele expulsava os demônios", "Porque Ele realizou milagres em dia de sábado", 
               "Porque Ele reconheceu ser o filho de Deus", "Porque Ele cometeu um pecado grave"],
               correctAnswer: 2
-            },
-            {
-              description: "Como foi a morte de Jesus?",
-              options: ["Jesus morreu crucificado", "Jesus morreu apedrejado", 
-              "Jesus morreu açoitado", "Jesus morreu por um golpe de espada"],
-              correctAnswer: 0
             },
             {
               description: "Qual o propósito da morte de Jesus na cruz?",
@@ -542,8 +551,14 @@
               correctAnswer: 1
             },
             {
-              description: "Quem pediu a Pilatos autorização para sepultar Jesus?",
-              options: ["Nicodemos", "Zaqueu","José de Arimatéia","Maria Madalena" ],
+              description: "Qual a relação do sacrifício de Cristo na cruz com a eucaristia consagrada na santa missa?",
+              options: ["A eucaristia não tem relação nenhuma com o sacrifício de Cristo.", "A eucaristia é uma lembrança do sacrifício de Cristo.", "A eucaristia é um símbolo do corpo e sangue de Cristo entregue na cruz.",
+              "A eucaristia é verdadeiramente o corpo e sangue de Cristo sacrificado na cruz."],
+              correctAnswer: 3
+            },
+            {
+              description: "Qual apóstolo estava ao lado de Maria quando Jesus morreu na cruz?",
+              options: ["Pedro", "Tiago","João","Mateus" ],
               correctAnswer: 2
             },
             {
@@ -554,6 +569,16 @@
             {
               description: "Qual destes acontecimentos alimenta nossa fé de que um dia teremos a vida eterna no céu?",
               options: ["A encarnação de Cristo", "A paixão de Cristo", "A morte de Cristo", "A ressurreição de Cristo" ],
+              correctAnswer: 3
+            },
+            {
+              description: "No momento da nossa morte o corpo se separa da nossa alma. O que acontece então?",
+              options: ["Alma se apresenta diante de Jesus para o seu juízo particular.", "A alma fica dormindo até o juízo final.", "A alma vai para a mansão dos mortos.", "A alma morre junto com o corpo para sempre." ],
+              correctAnswer: 0
+            },
+            {
+              description: "Após a morte, quais os possíveis destinos da alma?",
+              options: ["A alma pode ir para o céu, se a pessoa morreu em pleno estado de graça.", "A alma pode ir para o purgatório, se a pessoa morreu com alguma culpa temporal mas sem a culpa de um pecado grave.", "A alma pode ir para o inferno se a pessoa morreu com a culpa de um pecado grave.", "Todas as alternativas anteriores." ],
               correctAnswer: 3
             },]
         }, {
@@ -580,8 +605,8 @@
               correctAnswer: 0
             },
             {
-              description: "Os mandamentos foram divididos em duas tábuas, como foram organizados nestes dois grupos?",
-              options: [ "Mandamentos obrigatórios e opcionais", "Mandamentos de Deus e da Igreja", "Nosso deveres para com o próximo e para com a Igreja", "Nosso deveres para com Deus e para com o próximo"],
+              description: "Como Jesus resumiu os 10 Mandamentos?",
+              options: [ "Mandamentos obrigatórios e opcionais", "No Amor a Deus e a Igreja", "Nosso deveres para com o próximo e para com a Igreja", "No Amor a Deus e ao próximo"],
               correctAnswer: 3
             },
             {
@@ -600,7 +625,12 @@
               correctAnswer: 2
             },
             {
-              description: "Porque nós Cristãos Católicos obedecemos ao Segundo Mandamento guardando o domingo e não o sábado?",
+              description: "Pronunciar o nome de Deus em vão é um pecado contra o 2° Mandamento. Um exemplo seria:",
+              options: ["Meu Senhor e meu Deus, eu creio, mas aumenta minha fé.", "Eu vou ser curado, em nome de Jesus.","Deus te abençoe, meu filho.", "Aí meu Deus do céu, de novo essa bagunça." ],
+              correctAnswer: 3
+            },
+            {
+              description: "Porque nós Cristãos Católicos obedecemos ao Terceiro Mandamento guardando o domingo e não o sábado?",
               options: ["Domingo é o dia da ressurreição de Cristo", "Domingo é o dia de descanso no mundo todo", "Porque tem pessoas que trabalham no sábado", "Porque Jesus fez milagres no sábado"],
               correctAnswer: 0
             },
@@ -625,6 +655,11 @@
               correctAnswer: 3
             },
             {
+              description: "Quanto à obrigação dos filhos no diz respeito ao quarto mandamento, podemos afirmar que:",
+              options: ["Os filhos devem sempre obedecer às ordens dos pais.", "Os filhos não precisam ouvir os conselhos dos pais depois de adultos.", "Os filhos devem honrar seus pais por toda sua vida.", "Os filhos não estão sujeitos à autoridade de seus pais depois que chegam à idade da razão."],
+              correctAnswer: 2
+            },
+            {
               description: "Na estrutura familiar, a quem o quarto mandamento estabelece deveres?",
               options: ["Deveres dos filhos e dos pais", "Somente deveres dos filhos", "Somente deveres dos filhos e netos", "Somente deveres dos pais e avós"],
               correctAnswer: 0
@@ -633,6 +668,11 @@
               description: "De que trata o quinto mandamento?",
               options: ["Do direito à propriedade privada", "Do respeito à vida", "Da castidade", "Da cobiça"],
               correctAnswer: 1
+            },
+            {
+              description: "Uma pessoa internada com uma doença incurável vai para a UTI e sofre muitas dores e já está inconsciente, mas tem chances de sobreviver. Alguém sugere desligar os aparelhos para aliviar o sofrimento dela. Quanto a esta sugestão é possível afirmar que:",
+              options: ["É lícito desligar os aparelhos, pois ninguém merece sofrer tanto.", "Não é lícito desligar os aparelhos, pois a pessoa tem que ser consultada antes.", "Seria lícito desligar os aparelhos se os parentes autorizassem.", "Não é lícito desligar os aparelhos, pois só Deus tem autoridade sobre a vida."],
+              correctAnswer: 3
             },
             {
               description: "Em que situação é possível que haja um homicídio sem a culpa de um pecado mortal?",
@@ -653,6 +693,12 @@
               description: "Quais pecados NÃO representam ofensa à Castidade?",
               options: ["Masturbação", "Fornicação", "Pornografia", "Mentira",],
               correctAnswer: 3
+            },
+            {
+              description: "Achado não é roubado, mas é crime. A qual mandamento este crime ofende?",
+              options: ["5°", "6°", 
+              "7°", "8°"],
+              correctAnswer: 2
             },
             {
               description: "Por que o roubo pode se tornar uma ofensa grave?",
@@ -793,7 +839,7 @@
     let currentModule = 0;
     let score = 0;
     let currentQuestion = 0;
-    let answers = new Array();
+    let answers = [];
     let reviewMode = false;
 
     const modeElement = document.getElementById('game-mode');
@@ -835,11 +881,15 @@
     }
 
     function displayReview(){
-      reviewMode = true;
-      displayModules();
+      displayModules(true);
     }
 
-    function displayModules(){
+    function displayModules(rm){
+      if(rm){
+        reviewMode = true;
+      }else{
+        reviewMode = false;
+      }
       currentMode = 1;
       modeElement.style.display = 'none';
       gameElement.style.display = 'block';
@@ -894,11 +944,12 @@
 
     function displayQuestion() {
 
-      const question = questions[currentQuestion];
+      let question = questions[currentQuestion];
 
       if(!question){
-        displayModules();
-        return;
+        reviewMode = true;
+        currentQuestion = 0;
+        question = questions[currentQuestion];
       }
       questionElement.textContent = question.description;
 
@@ -942,18 +993,16 @@
             rightElement.style.display = 'block';
           }
 
-          for(var i=0; i<= answers.length;i++){
-            var a = answers[i];
-            if(a && a.m==currentModule&&a.q==currentQuestion ){
-              var labelSelected = document.querySelector('label[for=answer'+question.correctAnswer+']');
-              labelSelected.setAttribute('style', "background-color: #DAF7A6");
-              if(a.a!=question.correctAnswer){
-                var labelAns = document.querySelector('label[for=answer'+a.a+']');
-                labelAns.setAttribute('style', "background-color: tomato");
-              }
-              break;
+          if(answers[currentModule] && answers[currentModule][currentQuestion] >= 0){
+            var a = answers[currentModule][currentQuestion];
+            var labelSelected = document.querySelector('label[for=answer'+question.correctAnswer+']');
+            labelSelected.setAttribute('style', "background-color: #DAF7A6");
+            if(a!=question.correctAnswer){
+              var labelAns = document.querySelector('label[for=answer'+a+']');
+              labelAns.setAttribute('style', "background-color: tomato");
             }
           }
+        
         }
 
     }
@@ -1002,7 +1051,11 @@
       const isCorrect = answer === question.correctAnswer;
 
       if(currentMode==1 && question){
-        answers.push({m: currentModule, q: currentQuestion, a: answer});
+        if(!answers[currentModule]){
+            answers[currentModule] = [];
+        }
+        answers[currentModule][currentQuestion] = answer;
+        
       }  
 
       if(!isCorrect && currentMode==1){
@@ -1013,14 +1066,7 @@
       showFeedback(isCorrect);
 
       currentQuestion++;
-      if (currentQuestion >= questions.length) {
-        // Todas as perguntas respondidas
-        if(currentMode){
-          displayModules();
-        }else{
-          displayMode();
-        }
-      }
+      
     }
 
     function atualizarPontuacao() {
@@ -1054,4 +1100,3 @@
   </script>
 </body>
 </html>
-
