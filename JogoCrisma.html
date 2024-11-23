@@ -1022,8 +1022,8 @@
       } else {
         scoreElement.classList.remove('yellow-star');
         scoreElement.classList.add('red-star');
-        scoreElement.textContent = '-1';
-        score = Math.max(score - 1, 0);
+        scoreElement.textContent = 'X';
+        //score = Math.max(score - 1, 0);
       }
       if(currentMode){
         scores[currentModule] = score;
